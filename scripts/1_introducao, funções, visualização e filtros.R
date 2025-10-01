@@ -15,18 +15,40 @@
 2^3
 
 
+#Outros são funções, que recebem um valor e resultam em outro
+log(2) #Logarítmo 
+log(c(2, 3, 4))
+sum(c(2,3,4)) #Somatório
+sqrt(2) #Raiz quadrada
 
-log(2)
+#Podemos criar variaveis, ao dizer ao R que o objeto criado é (<-) alguma coisa
 
-##  "Criando" objetos/variáveis
-peso <- 50 
-altura <- 1.60
+peso <- 50
+peso+peso
+pesos <- c(50, 20, 34, 26)
+alturas <- c(1.60, 1.70, 1.65)
 
-#EXERCÍCIO: compute o IMC:
-peso/altura^2
+
+pesos/alturas^2
+altura <- 1.60 #Altura é 1.60
+
+
+
+#podemos aplicar as mesmas operações e funções
+#pegar uma variável, e dividir pelo quadrado da outra
+IMC <- peso/altura^2
+IMC
+
+#Estatística descritiva e funções
+#dado um conjunto de idades, podemos computar diversas estatísticas descritivas
+
+
+
+median(c(23, 22, 50, 12))
+
+
 
 ##EXTRA, saída mais bonitinha: função cat(), concatena objetos, nesse caso, textos e variáveis
-cat("IMC: ", peso*altura^2, "kg/m²")
 # Vetores
 ## São objetos com mais de um valor armazenado
 idades <- c(
@@ -63,20 +85,26 @@ sum(idades)      # somatório
 
 
 ##A média e a mediana foram próximas? se sim, ou se não, você acredita que isso aconteceu por qual razão?
-
+"idades"
 
 
 # Visualizações
-hist(idades) #Histograma
-stripchart(idades) #Grafico de pontos
-stripchart(log(idades), method = "stack") #Grafico de pontos empilhados
+hist(idades, bins = 3) #Histograma
+stripchart(idades)
+stripchart(idades, method = "stack") #Grafico de pontos
+stripchart(idades, method = "stack") #Grafico de pontos empilhados
 stripchart(exp(idades), method = "stack", add = TRUE) #Grafico de pontos empilhados
 
-boxplot(idades, horizontal = T)
+boxplot(idades, horizontal = TRUE,
+        main = "Titulo uno",
+        xlab = "Eixo x",
+        yab = "Eixo y",
+        col = "steelblue")
 stripchart(idades, 
            method = "stack", 
-           pch = 19,
-           add = T) #Grafico de pontos empilhados
+           pch = 1,
+           add = TRUE,
+           main = "") #Grafico de pontos empilhados
 
 boxplot(idades, horizontal = T)
 stripchart(idades, 
@@ -100,12 +128,25 @@ dados <- read.csv("https://raw.githubusercontent.com/VitorZe/Introducao-R-PAE-Bi
 
 #head() vai trazer as 5 primeiras observações
 head(dados)
+tail(dados)
 #View() vai trazer a visualização em formato de tabela em outra aba
 View(dados)
 
+dados$sexo
+
+
+table(dados$sexo)
 # INVESTIGAÇÃO
 hist(dados$peso)
 hist(dados$altura)
+
+boxplot(dados$altura, horizontal = TRUE)
+
+
+boxplot(dados[dados$sexo == "F", "altura"], horizontal = TRUE)
+
+
+dados[dados$altura <= 1, 'altura'] <- 1.82
 
 #Util para variaveis quantitativas
 summary(dados)
