@@ -1,0 +1,146 @@
+---
+title: "ExerciciosLlivroBioestatistica"
+output: pdf_document
+---
+
+# Capítulo 1:
+
+```{r}
+
+```
+
+# Capítulo 2
+
+# Capítulo 3
+
+# Capítulo 4
+
+# Capítulo 5
+
+# Capítulo 6
+
+# Capítulo 7: A distribuição normal
+
+## 4 - Seja Z uma variável aleatória que segue distribuição normal padrão. Encontre:
+
+a)  $P(0\le Z\le 1,42)$
+b)  ...
+c)  
+
+```{r C7 Densidades de probabilidade, echo=FALSE}
+
+densidadeProb <- function(a, b, item){
+    x <- seq(-4, 4, 0.001)
+    y <- dnorm(x)
+    
+    #Aqui temos a densidade de probabilida de um valor menor que 1.42 e maior que zero, calculada a partir da integral 
+    pnorm(a) - pnorm(b)
+    
+    plot(x, y,
+         type = 'l',
+         main = paste("Densidade de probabilidade para o item", item, 
+                      " = ", round(pnorm(b) - pnorm(a), 2)), 
+         xlab = "", ylab = "")
+    
+    x_area = x[x>=a & x<=b]
+    
+    polygon(c(x_area, rev(x_area)),
+            c(dnorm(x_area),rep(0, length(x_area))), 
+            col = 'steelblue')
+}
+
+# Maior que A, e menor que B
+densidadeProb(0, 1.42, "a)")
+densidadeProb(-0.73, 0, "b)")
+densidadeProb(-1.37, 2.01, "c)")
+densidadeProb(0.65, 1.26, "d)")
+densidadeProb(-1.79, -0.54, "e)")
+densidadeProb(1.13, 4, "f)")
+densidadeProb(-0.5, 0.5, "g)")
+```
+
+## 6. Seja X uma variável aleatória com média 8 e desvio padrão 4. Encontre:
+
+a)  
+
+# Capítulo 16 - Fundamentos de regressão linear
+
+## Exercicio 6
+
+A tabela a seguir apresenta o índice de massa corporal (IMC) e pressão arterial sistólica (PMS) de $n = 28$ adolescentes.
+
+```{r echo = FALSE}
+Exercicio6 <- data.frame(
+  "IMC" = c(34.1, 23.7, 37.24, 32, 23.58, 30.08, 34.8, 31.85, 
+                   27.57, 23.12, 26.47, 27.75, 23.66, 32.59,
+                   31.49, 26.61, 29.96, 23.3, 23.88, 30.17, 33.48, 31.60, 
+                   22.23, 30.17, 23.76, 24.97, 25.32, 32.37),
+  
+  "PAS" = c(122, 107, 126, 121, 102, 118, 125, 124, 
+                  110, 112, 112, 119, 100, 117, 
+                  111, 108, 118, 112, 111, 116, 119, 128, 
+                  103, 117, 107, 101, 102, 127)
+)
+Exercicio6
+```
+
+a Observe as estimativas de $\beta_0$ e $\beta_1$
+
+```{r, echo = FALSE}
+#Esboçe um grafico de dispersão para as variáveis
+
+plot(x = Exercicio6$PAS, y = Exercicio6$IMC, 
+     pch = 16,
+     main = "Dispersão das variáveis de IMC para cada PAS",
+     xlab = 'Pressão arterial sistólica (mmHg)',
+     ylab = 'Índice de massa corporal(Kg/m²)')
+
+```
+
+```{r C16E6, echo = FALSE}
+#Y (Índice de Massa Corporal) ~ X (Pressão Arterial Sistólica)
+modelo <- lm(Exercicio6$IMC ~ Exercicio6$PAS)
+summary(modelo)
+```
+
+```{r}
+hist(modelo$residuals, breaks = 5,
+     main = 'Histograma dos resíduos')
+
+qqnorm(modelo$residuals, main = 'Gáfico de quantil-quantil dos resíduos')
+qqline(modelo$residuals)
+```
+
+**Resíduos**: Refere-se aos valores observados no *scatterplot* não previstos na reta do modelo\
+**Coeficientes**: Intercept se refere ao valor esperado da VD(Y), quando a VI(x) é zero; o outro é a inclinação da reta, refere-se a quanto de alteração em x implica em alteração numa unidade de Y\
+**Erro padrão dos resíduos e graus de liberdade**\
+**R² múltiplo, R² ajustado,**\
+**Estatística F e graus de liberdade**
+
+```{r C16E6, echo = FALSE, fig.width = 10}
+valores_ajustados <- fitted(modelo)
+
+plot(x = Exercicio6$PAS, y = Exercicio6$IMC, 
+     pch = 16,
+     main = "Dispersão e regressão das variáveis de IMC para cada PAS",
+     xlab = 'Pressão arterial sistólica (mmHg)',
+     ylab = 'Índice de massa corporal(Kg/m²)')
+abline(modelo, col = 'grey15', lwd = 2)
+
+
+for(i in 1:nrow(Exercicio6)){
+  x_i <- Exercicio6$PAS[i]
+  y_i <- Exercicio6$IMC[i]
+  y_pred <- valores_ajustados[i]
+  
+  segments(x0 = x_i, y0 = y_i, 
+           x1 = x_i, y1 = y_pred,
+           col = "black", lty = 2, )
+}
+```
+
+```{r echo = FALSE}
+#summary(modelo)
+```
+
+## 

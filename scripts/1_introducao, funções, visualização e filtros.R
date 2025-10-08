@@ -96,13 +96,13 @@ stripchart(idades, method = "stack") #Grafico de pontos empilhados
 stripchart(exp(idades), method = "stack", add = TRUE) #Grafico de pontos empilhados
 
 boxplot(idades, horizontal = TRUE,
-        main = "Titulo uno",
+        main = "Titulo ",
         xlab = "Eixo x",
         yab = "Eixo y",
         col = "steelblue")
 stripchart(idades, 
            method = "stack", 
-           pch = 1,
+           pch = 16,
            add = TRUE,
            main = "") #Grafico de pontos empilhados
 
