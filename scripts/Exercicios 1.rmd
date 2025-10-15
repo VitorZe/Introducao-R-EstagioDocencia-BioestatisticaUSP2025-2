@@ -42,8 +42,8 @@ Entre os dados, filtre por categoria
 
 ```{r}
 #Ex
-mulheres <- dados[dados$sexo == "F", ]
-mulheres
+fem <- dados[dados$sexo == "F", ]
+fem
 ```
 
 Entre os dados, filtre por ponto de corte de uma variável quantitativa
@@ -54,25 +54,78 @@ Entre os dados, filtre por ponto de corte de uma variável quantitativa
 
 ## Distribuição normal
 
+dado uma variável com distribuição normal
+
+dnorm() traz a densidade de probabilidade de uma curva normal para certo valor, a altura da curva
+
+pnorm() - Calcua a probabilidade acumulada até certo valor (x \<=)
+
+\
+Encontre $P(0\le Z\le 1,42)$
+
 ```{r}
-a = 180
-b = 195
-x <- seq((-4*10)+200, (4*10)+200, 0.001)
-y <- dnorm(x, 200, 10)
+x <- seq(-4, 4, 0.001)
+y <- dnorm(x)
 
-#Aqui temos a densidade de probabilida de um valor menor que 1.42 e maior que zero, calculada a partir da integral 
-#pnorm(a) - pnorm(b)
+a <- 0
+b <- 1.42
 
-#Plota x e y com 
+
 plot(x,  
      y,
      type = 'l',
-     main = "", 
+     main = paste("Densidade de probabilidade", 
+                  " = ", round(pnorm(a) - pnorm(b), 2)), 
      xlab = "", ylab = "")
 
 x_area = x[x>=a & x<=b]
 
-polygon(c(x_area, rev(x_area)),
-        c(dnorm(x_area),rep(0, length(x_area))), 
+polygon(c(x_area, 
+          rev(x_area)),
+        c(dnorm(x_area), 
+          rep(0, length(x_area))), 
         col = 'steelblue')
+
+```
+
+Encontre $P(0\le Z\le 1,42)$
+
+```{r}
+
+```
+
+Dado uma variavel que segue distribuição normal
+
+```{r}
+# Parâmetros
+#Menor que 30 e maior que 0
+a <- 30 #começo, a <= x <= b
+b <- Inf #fim 
+mu <- 23.4
+sigma <- 2.3
+
+# Sequência de valores para x
+x <- seq(mu - 4*sigma, mu + 4*sigma, 0.01)
+
+# Valores da densidade
+y <- dnorm(x, mean = mu, sd = sigma)
+
+# curva normal grafico
+plot(x, y, type='l', lwd=2, col='black',
+     main=paste0("Densidade de probabilidade: ", 
+                 round(pnorm(a, mean = mu, sd = sigma) - pnorm(b, mean=mu, sd=sigma), 4)),
+     xlab='Valores', ylab='Densidade')
+
+# Selecionar a área entre a e b
+x_area <- x[x >= a & x <= b]
+y_area <- dnorm(x_area, mean=mu, sd=sigma)
+
+# Preencher a área
+polygon(c(x_area[1], x_area, x_area[length(x_area)]), 
+        c(0, y_area, 0), 
+        col='steelblue', border=NA)
+
+# Adicionar linha da curva por cima do preenchimento, p ficar bunito
+lines(x, y, lwd=2, col='black')
+
 ```
