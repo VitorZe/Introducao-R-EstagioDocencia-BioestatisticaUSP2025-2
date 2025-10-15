@@ -5,7 +5,8 @@ date: "2025-10-13"
 output: html_document
 ---
 
-Pré
+Pré, escolha um dataset, ou siga com o que está aqui\
+Alguns sites tem vários datasets prontos, organizados por categoria, vale a pena dar uma olhada, sites como
 
 ```{r}
 dados <- read.csv("https://raw.githubusercontent.com/VitorZe/Introducao-R-PAE-BioestatisticaNutricao/refs/heads/main/dados/dadosNutri.csv")
@@ -16,7 +17,7 @@ dados <- read.csv("https://raw.githubusercontent.com/VitorZe/Introducao-R-PAE-Bi
 ## Revisão dos primeiros passos
 
 Observe e sumarize os dados da forma que achar melhor pra entender o seu conjunto\
-temos funções como `summarise(); mean(); sd(); median()`
+temos funções como `head(); table()`; `summarise(); mean(); sd(); median()...`
 
 ```{r}
 
@@ -52,6 +53,15 @@ Entre os dados, filtre por ponto de corte de uma variável quantitativa
 
 ```
 
+Compute a associação entre duas variáveis quaisqueres, e interprete\
+Opções: Correlação para variaveis quantitativas, teste t para uma variavel quantitativa seccionada em dois grupos, qui quadrado para frequencias de duas ou mais variaveis quantitativas
+
+`corr(); t.test(); chisq.test()`
+
+```{r}
+
+```
+
 ## Distribuição normal
 
 dado uma variável com distribuição normal
@@ -78,7 +88,7 @@ plot(x,
                   " = ", round(pnorm(a) - pnorm(b), 2)), 
      xlab = "", ylab = "")
 
-x_area = x[x>=a & x<=b]
+x_area = x[a<=x & x<=b]
 
 polygon(c(x_area, 
           rev(x_area)),
@@ -94,15 +104,34 @@ Encontre $P(0\le Z\le 1,42)$
 
 ```
 
-Dado uma variavel que segue distribuição normal
+Dado uma variavel que segue distribuição normal, com $\mu = 21.8$ e $\sigma = 2.4$, \
+a) qual a probabilidade de encontrarmos, se selecionado pelo acaso, um sujeito com x \> 25?\
+b) Entre 20 e 25\
+c) Maior que 10\
+d) Maior que 35\
+e) 90% possui valor maior que k, qual é esse valor?\
 
 ```{r}
+
+x = 30
+mu = 21.8
+sigma = 2.4
+z = (x-mu)/sigma
+cat("z = ", z)
+#prob de Z > z 
+cat("\n\nProbabilidade de Z < z: ", pnorm(z)) 
+cat("\n\nProbabilidade de Z > z: ", 1 - pnorm(z)) 
+```
+
+\
+
+```{r, fig.height = 5}
 # Parâmetros
 #Menor que 30 e maior que 0
-a <- 30 #começo, a <= x <= b
+a <- 25 #começo, a <= x <= b
 b <- Inf #fim 
-mu <- 23.4
-sigma <- 2.3
+mu <- 21.8
+sigma <- 2.4
 
 # Sequência de valores para x
 x <- seq(mu - 4*sigma, mu + 4*sigma, 0.01)
@@ -112,8 +141,9 @@ y <- dnorm(x, mean = mu, sd = sigma)
 
 # curva normal grafico
 plot(x, y, type='l', lwd=2, col='black',
-     main=paste0("Densidade de probabilidade: ", 
-                 round(pnorm(a, mean = mu, sd = sigma) - pnorm(b, mean=mu, sd=sigma), 4)),
+     main=paste0("Densidade de probabilidade para ",
+                 "\n", a, " < z < ", b,
+                 "\n", round(pnorm(a, mean = mu, sd = sigma) - pnorm(b, mean=mu, sd=sigma), 5)),
      xlab='Valores', ylab='Densidade')
 
 # Selecionar a área entre a e b
@@ -123,7 +153,7 @@ y_area <- dnorm(x_area, mean=mu, sd=sigma)
 # Preencher a área
 polygon(c(x_area[1], x_area, x_area[length(x_area)]), 
         c(0, y_area, 0), 
-        col='steelblue', border=NA)
+        col='steelblue', border="black")
 
 # Adicionar linha da curva por cima do preenchimento, p ficar bunito
 lines(x, y, lwd=2, col='black')
