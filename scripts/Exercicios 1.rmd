@@ -1,0 +1,78 @@
+---
+title: "Exercicios 1"
+author: "Zé Vitor"
+date: "2025-10-13"
+output: html_document
+---
+
+Pré
+
+```{r}
+dados <- read.csv("https://raw.githubusercontent.com/VitorZe/Introducao-R-PAE-BioestatisticaNutricao/refs/heads/main/dados/dadosNutri.csv")
+```
+
+# Exercícios
+
+## Revisão dos primeiros passos
+
+Observe e sumarize os dados da forma que achar melhor pra entender o seu conjunto\
+temos funções como `summarise(); mean(); sd(); median()`
+
+```{r}
+
+```
+
+Há outliers no dataset, classifique-os e remova-os (Usamos o "\<-" para declarar algo)
+
+```{r}
+
+
+```
+
+Visualize variáveis e relações entre variaveis\
+`plot(); hist(); barplot(); boxplot()`\
+bom lembrar tambem dos parametros "`xlab=`", "`main=`", "`col=`"
+
+```{r}
+#Exemplo
+plot(dados$idade, dados$altura)
+```
+
+Entre os dados, filtre por categoria
+
+```{r}
+#Ex
+mulheres <- dados[dados$sexo == "F", ]
+mulheres
+```
+
+Entre os dados, filtre por ponto de corte de uma variável quantitativa
+
+```{r}
+
+```
+
+## Distribuição normal
+
+```{r}
+a = 180
+b = 195
+x <- seq((-4*10)+200, (4*10)+200, 0.001)
+y <- dnorm(x, 200, 10)
+
+#Aqui temos a densidade de probabilida de um valor menor que 1.42 e maior que zero, calculada a partir da integral 
+#pnorm(a) - pnorm(b)
+
+#Plota x e y com 
+plot(x,  
+     y,
+     type = 'l',
+     main = "", 
+     xlab = "", ylab = "")
+
+x_area = x[x>=a & x<=b]
+
+polygon(c(x_area, rev(x_area)),
+        c(dnorm(x_area),rep(0, length(x_area))), 
+        col = 'steelblue')
+```
