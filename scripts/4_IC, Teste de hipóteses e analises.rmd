@@ -1,13 +1,16 @@
 ```{r}
+#Session -> Set working directory -> To source file location
+#Session -> Set working directory -> Select
 setwd("~/0.Mestrado Saude Mental/3.Disciplinas/PAE/Repo/scripts")
 dados <- read.csv("~/0.Mestrado Saude Mental/3.Disciplinas/PAE/Repo/dados/dadosBiomed.csv", sep = ";")
 ```
 compreendendo e visualização as variáveis no grupo
+NOVIDAD: loops usando a função for
 ```{r}
 
 for(coluna in names(dados)) {
   cat("\nSumarizacion da coluna: ", coluna, "\n")
-  if(is.numeric(dados[[coluna]])){
+  if(is.numeric(dados[[coluna]])) {
     print(summary(dados[[coluna]]))
   } else {
     print(table(dados[[coluna]]))
@@ -18,7 +21,7 @@ Vamos analisar as variaveis peso e altura
 O que se sabe sobre a distribuição das variáveis numéricas? parecem seguir uma distribuição semelhante a normal?
 Vemos mediante histogram, boxplot, qqplot() e teste de shapiro-wilk - shapiro.test()
 Interpretação de shapiro: Quando a estatística se aproxima de 1, e o p é maior que 0.05, temos uma distribuição que se assemelha a uma normal
-
+Se nao, usaremos as estatisticas não parametricas para testar a hipotese
 ```{r}
 hist(dados$peso)
 shapiro.test(dados$peso)
@@ -34,11 +37,14 @@ plot(dados[["peso_kg"]], dados[["altura_m"]])
 cor.test(dados[["peso_kg"]], dados[["altura_m"]])
 ```
 Há diferença quanto a altura entre os gêneros?
+além da estatística, temos tamanhos de efeito, estes se referem a calculos utilizados para tentar deixar os resultados mais legivei/interpretáveis. Para diferença de médias, por exemplo, temos o d de cohen (Cohenm 1988, p.; p. 64) 
 
-$$d = \frac{Ma-Mb}{\sqrt{\frac{s^a+s^2}{2}}}$$
+valor p é o valor minimo de alfa para que a estatística esteja for
+$$d = \frac{\bar Xa-\bar Xb}{\sqrt{\frac{s^a+s^2}{2}}}$$
 ```{r}
 table(dados[["sexo"]])
 
+#statistica T
 t.test(dados[["altura_m"]] ~ dados[["sexo"]])
 MediaFem = mean(dados[dados$sexo == "F", "altura_m"])
 MediaMasc = mean(dados[dados$sexo == "M", "altura_m"])
@@ -55,3 +61,11 @@ Há diferença quanto a sexo entre os gêneros?
 ```
 
 Vamos propor algumas perguntas
+
+
+
+
+
+Referencias
+Cohen J. (1988). Statistical power analysis for the behavioral sciences (2nd ed.). Hillside, NJ: Lawrence Erlbaum Associates. https://utstat.toronto.edu/~brunner/oldclass/378f16/readings/CohenPower.pdf 
+Cohen J. (1992). A power primer. Psychological bulletin, 112(1), 155–159. https://doi.org/10.1037//0033-2909.112.1.155
