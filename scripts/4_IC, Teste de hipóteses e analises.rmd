@@ -1,0 +1,41 @@
+```{r}
+setwd("~/0.Mestrado Saude Mental/3.Disciplinas/PAE/Repo/scripts")
+dados <- read.csv("~/0.Mestrado Saude Mental/3.Disciplinas/PAE/Repo/dados/dadosBiomed.csv", sep = ";")
+```
+compreendendo e visualização as variáveis no grupo
+```{r}
+
+for(coluna in names(dados)) {
+  cat("\nSumarizacion da coluna: ", coluna, "\n")
+  if(is.numeric(dados[[coluna]])){
+    print(summary(dados[[coluna]]))
+  } else {
+    print(table(dados[[coluna]]))
+  }
+}
+```
+Vamos analisar as variaveis peso e altura 
+O que se sabe sobre a distribuição das variáveis numéricas? parecem seguir uma distribuição semelhante a normal?
+Vemos mediante histogram, boxplot, qqplot() e teste de shapiro-wilk - shapiro.test()
+Interpretação de shapiro: Quando a estatística se aproxima de 1, e o p é maior que 0.05, temos uma distribuição que se assemelha a uma normal
+
+```{r}
+hist(dados$peso)
+shapiro.test(dados$peso)
+
+hist(dados$altura_m)
+shapiro.test(dados$altura_m)
+```
+
+Há algum grau de associação entre altura e peso na amostra?
+```{r}
+plot(dados[["peso_kg"]], dados[["altura_m"]])
+
+cor.test(dados[["peso_kg"]], dados[["altura_m"]])
+```
+
+
+```{r}
+```
+
+Vamos propor algumas perguntas
