@@ -6,7 +6,13 @@ output: html_document
 ---
 
 Pré, escolha um dataset, ou siga com o que está aqui\
-Alguns sites tem vários datasets prontos, organizados por categoria, vale a pena dar uma olhada, sites como
+Alguns sites tem vários datasets prontos, organizados por categoria, vale a pena dar uma olhada, sites como <https://archive.ics.uci.edu/>
+
+I
+
+```{r}
+install.packages("rmarkdown")
+```
 
 ```{r}
 dados <- read.csv("https://raw.githubusercontent.com/VitorZe/Introducao-R-PAE-BioestatisticaNutricao/refs/heads/main/dados/dadosNutri.csv")
@@ -74,17 +80,16 @@ pnorm() - Calcua a probabilidade acumulada até certo valor (x \<=)
 Encontre $P(0\le Z\le 1,42)$
 
 ```{r}
-x <- seq(-4, 4, 0.001)
+x <- seq(-4, 4, 0.0001)
 y <- dnorm(x)
 
-a <- 0
-b <- 1.42
+a <- -2
+b <- 2
 
-
-plot(x,  
+plot(x, 
      y,
      type = 'l',
-     main = paste("Densidade de probabilidade", 
+     main = paste0("Densidade de probabilidade", 
                   " = ", round(pnorm(a) - pnorm(b), 2)), 
      xlab = "", ylab = "")
 
@@ -104,7 +109,7 @@ Encontre $P(0\le Z\le 1,42)$
 
 ```
 
-Dado uma variavel que segue distribuição normal, com $\mu = 21.8$ e $\sigma = 2.4$, \
+Dado uma variavel que segue distribuição normal, com $\mu = 21.8$ e $\sigma = 2.4$,\
 a) qual a probabilidade de encontrarmos, se selecionado pelo acaso, um sujeito com x \> 25?\
 b) Entre 20 e 25\
 c) Maior que 10\
@@ -119,7 +124,7 @@ sigma = 2.4
 z = (x-mu)/sigma
 cat("z = ", z)
 #prob de Z > z 
-cat("\n\nProbabilidade de Z < z: ", pnorm(z)) 
+paste0("\n\nProbabilidade de Z < z: ", pnorm(z)) 
 cat("\n\nProbabilidade de Z > z: ", 1 - pnorm(z)) 
 ```
 
@@ -130,6 +135,7 @@ cat("\n\nProbabilidade de Z > z: ", 1 - pnorm(z))
 #Menor que 30 e maior que 0
 a <- 25 #começo, a <= x <= b
 b <- Inf #fim 
+
 mu <- 21.8
 sigma <- 2.4
 
@@ -157,5 +163,20 @@ polygon(c(x_area[1], x_area, x_area[length(x_area)]),
 
 # Adicionar linha da curva por cima do preenchimento, p ficar bunito
 lines(x, y, lwd=2, col='black')
+
+```
+
+```{r}
+
+```
+
+## mu = 50 dias sigma = 10
+
+a) \> 30\
+b) \<30\
+c) \>50\
+d) 40 e 60
+
+```{r}
 
 ```
