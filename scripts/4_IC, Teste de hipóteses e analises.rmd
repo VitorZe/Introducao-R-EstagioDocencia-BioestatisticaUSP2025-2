@@ -33,7 +33,23 @@ plot(dados[["peso_kg"]], dados[["altura_m"]])
 
 cor.test(dados[["peso_kg"]], dados[["altura_m"]])
 ```
+Há diferença quanto a altura entre os gêneros?
 
+$$d = \frac{Ma-Mb}{\sqrt{\frac{s^a+s^2}{2}}}$$
+```{r}
+table(dados[["sexo"]])
+
+t.test(dados[["altura_m"]] ~ dados[["sexo"]])
+MediaFem = mean(dados[dados$sexo == "F", "altura_m"])
+MediaMasc = mean(dados[dados$sexo == "M", "altura_m"])
+DPMasc = sd(dados[dados$sexo == "F", "altura_m"])
+DPFem = sd(dados[dados$sexo == "F", "altura_m"])
+
+cat("d de cohen: ", (MediaFem - MediaMasc)/(sqrt(DPFem+DPMasc)/2))
+```
+
+
+Há diferença quanto a sexo entre os gêneros?
 
 ```{r}
 ```
